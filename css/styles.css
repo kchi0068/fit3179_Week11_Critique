@@ -1,0 +1,83 @@
+.title {
+    text-align: center;
+    font-family: "Playfair Display";
+    font-size: larger;
+    color: #094001;
+    background-color: #a4d49d;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    border-radius: 25px;
+}
+
+.page {
+    margin: auto;
+    padding: 50px;
+    padding-left: 300px;
+    padding-right: 300px;
+
+    background-color: #e4f7e1;
+}
+
+.vis-container {
+    width: 100%;
+}
+
+.choropleth_map{
+    height: 720px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.outline {
+    outline: 10px solid #094001;
+}
+
+.row_box {
+    background-color: #a4d49d;
+    border-radius: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-bottom: 50px;
+
+    box-shadow: 10px 10px #094001;
+}
+
+.row2 {
+    padding-bottom: 50px;
+}
+
+
+
+.para1 {
+    text-align: justify;
+    line-height: 180%;
+}
+
+.para2 {
+    width: 55%;
+    text-align: justify;
+    line-height: 180%;
+}
+
+.para3 {
+    width: 40%;
+    margin-left: 67px;
+    text-align: justify;
+    line-height: 180%;
+}
+
+.dot_matrix {
+    width: 430px;
+    margin-left: 55px;
+    background-color: #c0e8ba;
+}
+
+.radar_chart {
+    width: 47%;
+    background-color: #c0e8ba;
+}
+
+.candlestick_chart {
+    background-color: #c0e8ba;
+}

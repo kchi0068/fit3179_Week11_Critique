@@ -1,0 +1,74 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": "container",
+    "height": 720,
+    "title": "NVIDIA Stock Price 2019-2024",
+    "background": "#c0e8ba",
+    "padding": 30,
+
+    "data": {"url": "data/nvidia-stock-data.csv"},
+
+    "transform": [
+        {
+            "calculate": "parseInt(replace(datum.Open, /[$,]/g, ''))",
+            "as": "open_int"
+        },
+        {
+            "calculate": "parseInt(replace(datum.Close, /[$,]/g, ''))",
+            "as": "close_int"
+        },
+        {
+            "calculate": "parseInt(replace(datum.High, /[$,]/g, ''))",
+            "as": "high_int"
+        },
+        {
+            "calculate": "parseInt(replace(datum.Low, /[$,]/g, ''))",
+            "as": "low_int"
+        }
+    ],
+
+
+    "encoding": {
+        "x": {
+            "field": "Date",
+            "type": "temporal",
+            "title": "Date",
+            "axis": {
+                "format": "%m/%d/%Y",
+                "labelAngle": -45,
+                "axis": {"title": "Date"}
+            }
+        },
+
+        "y": {
+            "type": "quantitative",
+            "scale": {"zero": false},
+            "axis": {"title": "Price ($)"}
+        },
+
+        "color": {
+            "condition": {
+                "test": "datum.open_int < datum.close_int",
+                "value": "#33a02c"
+            },
+            "value": "#6a51a3"
+        }
+    },
+
+    "layer": [
+        {
+            "mark": "rule",
+            "encoding": {
+                "y": {"field": "low_int"},
+                "y2": {"field": "high_int"}
+            }
+        },
+        {
+            "mark": "bar",
+            "encoding": {
+                "y": {"field": "open_int"},
+                "y2": {"field": "close_int"}
+            }
+        }
+    ]
+}

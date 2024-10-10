@@ -1,0 +1,203 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v5.json",
+    "description": "A radar chart example, showing multiple dimensions in a radial layout.",
+    "width": 640,
+    "height": 540,
+    "title": {"text": "NVIDIA RTX 4090 vs AMD RX 7900 XTX Frames-Per-Second", "fontSize": 16, "offset": 20},
+    "padding": {"left": 120, "top": 80, "right": 600, "bottom": 60},
+    "autosize": {"type": "none", "contains": "padding"},
+  
+    "signals": [
+      {"name": "radius", "update": "200"}
+    ],
+  
+    "data": [
+      {
+        "name": "table",
+        "values": [
+            {"key": "Cyberpunk 2077", "value": 49, "category": "RTX 4090"},
+            {"key": "Cyberpunk 2077", "value": 30, "category": "RX 7900 XTX"},
+            {"key": "Baldur's Gate 3", "value": 104, "category": "RTX 4090"},
+            {"key": "Baldur's Gate 3", "value": 97, "category": "RX 7900 XTX"},
+            {"key": "Deathloop", "value": 152, "category": "RTX 4090"},
+            {"key": "Deathloop", "value": 132, "category": "RX 7900 XTX"},
+            {"key": "Cities: Skylines II", "value": 58, "category": "RTX 4090"},
+            {"key": "Cities: Skylines II", "value": 46, "category": "RX 7900 XTX"},
+            {"key": "Star Wars Jedi: Survivor", "value": 104, "category": "RTX 4090"},
+            {"key": "Star Wars Jedi: Survivor", "value": 87, "category": "RX 7900 XTX"},
+            {"key": "Red Dead Redemption 2", "value": 125, "category": "RTX 4090"},
+            {"key": "Red Dead Redemption 2", "value": 100, "category": "RX 7900 XTX"}
+        ]
+      },
+      {
+        "name": "keys",
+        "source": "table",
+        "transform": [
+          {
+            "type": "aggregate",
+            "groupby": ["key"]
+          }
+        ]
+      }
+    ],
+  
+    "scales": [
+      {
+        "name": "angular",
+        "type": "point",
+        "range": {"signal": "[-PI, PI]"},
+        "padding": 0.5,
+        "domain": {"data": "table", "field": "key"}
+      },
+      {
+        "name": "radial",
+        "type": "linear",
+        "range": {"signal": "[0, radius]"},
+        "zero": true,
+        "nice": false,
+        "domain": {"data": "table", "field": "value"},
+        "domainMin": 0
+      },
+      {
+        "name": "color",
+        "type": "ordinal",
+        "domain": {"data": "table", "field": "category"},
+        "range": ["#33a02c", "#6a51a3"]
+      }
+    ],
+
+    "legends": [
+      {
+        "fill": "color",
+        "title": "Graphics Card",
+        "orient": "none",
+        "legendX": 170,
+        "legendY": 190,
+        "encode": {
+          "labels": {
+            "update": {
+              "fontSize": {"value": 12},
+              "fill": {"value": "#333"}
+            }
+          }
+        }
+      }
+    ],
+  
+    "encode": {
+      "enter": {
+        "x": {"signal": "radius"},
+        "y": {"signal": "radius"}
+      }
+    },
+  
+    "marks": [
+      {
+        "type": "group",
+        "name": "categories",
+        "zindex": 1,
+        "from": {
+          "facet": {"data": "table", "name": "facet", "groupby": ["category"]}
+        },
+        "marks": [
+          {
+            "type": "line",
+            "name": "category-line",
+            "from": {"data": "facet"},
+            "encode": {
+              "enter": {
+                "interpolate": {"value": "linear-closed"},
+                "x": {"signal": "scale('radial', datum.value) * cos(scale('angular', datum.key))"},
+                "y": {"signal": "scale('radial', datum.value) * sin(scale('angular', datum.key))"},
+                "stroke": {"scale": "color", "field": "category"},
+                "strokeWidth": {"value": 1},
+                "fill": {"scale": "color", "field": "category"},
+                "fillOpacity": {"value": 0.1}
+              }
+            }
+          },
+          {
+            "type": "text",
+            "name": "value-text",
+            "from": {"data": "category-line"},
+            "encode": {
+              "enter": {
+                "x": {"signal": "datum.x"},
+                "y": {"signal": "datum.y"},
+                "text": {"signal": "datum.datum.value"},
+                "align": {"value": "center"},
+                "baseline": {"value": "middle"},
+                "fill": {"value": "black"},
+                "fontSize": {"value": 11}
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "rule",
+        "name": "radial-grid",
+        "from": {"data": "keys"},
+        "zindex": 0,
+        "encode": {
+          "enter": {
+            "x": {"value": 0},
+            "y": {"value": 0},
+            "x2": {"signal": "radius * cos(scale('angular', datum.key))"},
+            "y2": {"signal": "radius * sin(scale('angular', datum.key))"},
+            "stroke": {"value": "darkgray"},
+            "strokeWidth": {"value": 1}
+          }
+        }
+      },
+      {
+        "type": "text",
+        "name": "key-label",
+        "from": {"data": "keys"},
+        "zindex": 1,
+        "encode": {
+          "enter": {
+            "x": {"signal": "(radius + 10) * cos(scale('angular', datum.key))"},
+            "y": {"signal": "(radius + 10) * sin(scale('angular', datum.key))"},
+            "text": {"field": "key"},
+            "align": [
+              {
+                "test": "abs(scale('angular', datum.key)) > PI / 2",
+                "value": "right"
+              },
+              {
+                "value": "left"
+              }
+            ],
+            "baseline": [
+              {
+                "test": "scale('angular', datum.key) > 0", "value": "top"
+              },
+              {
+                "test": "scale('angular', datum.key) == 0", "value": "middle"
+              },
+              {
+                "value": "bottom"
+              }
+            ],
+            "fill": {"value": "black"},
+            "fontWeight": {"value": "bold"}
+          }
+        }
+      },
+      {
+        "type": "line",
+        "name": "outer-line",
+        "from": {"data": "radial-grid"},
+        "encode": {
+          "enter": {
+            "interpolate": {"value": "linear-closed"},
+            "x": {"field": "x2"},
+            "y": {"field": "y2"},
+            "stroke": {"value": "darkgray"},
+            "strokeWidth": {"value": 1}
+          }
+        }
+      }
+    ]
+  }

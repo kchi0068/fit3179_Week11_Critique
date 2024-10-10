@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+        <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+        <!-- Import pure.css -->
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+            integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Google font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+        <!-- CSS file -->
+        <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+    
+    </head>
+
+    <body>
+        <div class="page">
+
+            <!-- Title -->
+            <div class = "title">
+            <h1>
+                Why Steam Users prefer NVIDIA Graphics Cards
+            </h1>
+            </div>
+
+            <!-- pure grid group -->
+            <div class="pure-g choropleth_map">
+                <div class="pure-u-1-1">
+                    <div id="steam_users_by_country" class="vis-container"></div>
+                </div>
+            </div>
+            <!-- end pure grid group -->
+
+            <!-- pure grid group -->
+            <div class="pure-g para1 row_box">
+                <div class="pure-u-1-1">
+                  <p style = "font-family: 'Roboto', sans-serif"><b>Steam</b> is one of the largest online gaming distribution platforms in the world, with approximately <b>132 million users</b> worldwide.
+                    Amongst online Personal Computer (PC) gamers, it has cultivated a reputation for being the 'go-to' storefront for millions of 
+                    gamers all over the globe. As such, analyzing the geographic distribution of its userbase offers a key look into the general
+                    geographic distribution of PC gamers across the world.
+                  </p>
+                  <p style = "font-family: 'Roboto', sans-serif">
+                    Indeed, it can be seen that there is a large number of Steam users per 10,000 population in <b>Western and European countries</b> like the United States, 
+                    Australia, Canada, the United Kingdom, and Sweden. The same can also be said for a lot of countries in <b>South America</b> such as Brazil and Argentina. 
+                    However, interestingly enough, there exists a sizeable number of Steam users per 10,000 population in Asian countries like
+                    <b>Malaysia and South Korea</b>, and this difference is especially pronounced when comparing them to their surrounding neighbours
+                    like Indonesia and China respectively.
+                  </p>
+                  <p style = "font-family: 'Roboto', sans-serif">
+                    With all this in mind, we can confidently identify geographic regions where there exists a high concentration of PC gamers.
+                    For companies manufacturing hardware for PC gaming, this sort of data is crucial for pinpointing which markets they should
+                    focus on and for <b>identifying new and emerging markets</b> for selling their wares. One such company is <b>NVIDIA</b>, which manufactures
+                    Graphics Cards or Graphics Processing Units (GPU) that are crucial components in running PC games.
+                  </p>
+                </div>
+            </div>
+            <!-- end pure grid group -->
+
+
+            <!-- pure grid group -->
+            <div class="pure-g">
+                <div class="pure-u-1-2 para2 row_box">
+                    <div class = "description description-left">
+                        <h2 style = 'font-family: Roboto, sans-serif;'>NVIDIA versus The Competition</h2>
+                        <p style = "font-family: 'Roboto', sans-serif">
+                            <b>Steam</b> runs a monthly survey in order to collect data on the PC specifications of its users, compiling and releasing
+                            them in the <b>Steam Hardware & Software Survey</b> of that particular month. The September 2024 issue of said
+                            survey has identified 3 major manufacturers of GPUs: <b>NVIDIA, AMD, and Intel</b>. There are of course other GPU
+                            manufacturers besides these 3, but these are the major players in the GPU market. 
+                        </p>
+                        <p style = "font-family: 'Roboto', sans-serif">
+                            Of the 3 major GPU manufacturers in the market, <b>NVIDIA</b> has emerged as the clear market dominator, with <b>over 75% of Steam users</b>
+                            polled by the September 2024 issue of the Steam Hardware & Software Survey having chosen an NVIDIA-manufactured GPU
+                            for their PC, compared to roughly 11% for AMD and 5% for Intel. 
+                            This indicates that <b>a vast majority of Steam users prefer NVIDIA GPUs</b> over GPUs manufactured by their competitors.
+                        </p>
+                        <p style = "font-family: 'Roboto', sans-serif">
+                            All of this begs the question: why do Steam users overwhelmingly prefer NVIDIA GPUs over that of AMD and Intel?
+                        </p>
+                    </div>
+                </div>
+
+                <div class = "pure-u-1-2 dot_matrix row_box">
+                    <div id = "steam_hardware_survey_gpu_company_share" class = "vis-container"></div>
+                </div>
+            </div>
+            <!-- end pure grid group -->
+
+
+            <!-- pure grid group -->
+            <div class="pure-g row3">
+                <div class = "pure-u-1-2 radar_chart row_box">
+                    <div id = "rtx4090_vs_rtx_7900_xtx" class = "vis-container radar_chart"></div>
+                </div>
+
+                <div class="pure-u-1-2 para3 row_box">
+                    <div class = "description description-right">
+                        <h2 style = 'font-family: Roboto, sans-serif;'>Flagship Graphics Card Comparison</h2>
+                        <p style = "font-family: 'Roboto', sans-serif">
+                            Let us then compare the <b>flagship GPUs</b> of NVIDIA <b>(The RTX 4090)</b> and AMD <b>(The RX 7900 XTX)</b> with one another. These
+                            flagship GPUs represent the <b>highest-end, top-performing GPU of their generation</b> and this is reflected in not only
+                            their steep price but their performance in games. To that end, we have visualized each respective GPU's average
+                            <b>frames-per-second</b> (FPS) on 4K resolution at the highest graphical settings within 6 PC games 
+                            (Cyberpunk 2077, Baldur's Gate 3, Deathloop, Red Dead Redemption 2, Cities: Skylines II, and Star Wars Jedi: Survivor) .
+                        </p>
+
+                        <p style = "font-family: 'Roboto', sans-serif">
+                            From the chart, we can see that NVIDIA's RTX 4090 completely blows AMD's RX 7900 XTX out of the water in terms of
+                            sheer performance. In all 6 games, <b>NVIDIA's RTX 4090 delivered a higher average FPS</b> than AMD's RX 7900 XTX did and often
+                            did so by a significant margin as well.
+                        </p>
+
+                        <p style = "font-family: 'Roboto', sans-serif">
+                            Combining this data with our knowledge that the vast majority of Steam users reside in <b>developed, Western nations</b>
+                            and as such are very likely to have the <b>disposable income</b> to afford flagship GPUs, we can easily see that
+                            such individuals will prefer NVIDIA's Flagship GPU over that of AMD's due to the RTX 4090's <b>superior performance</b>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- end pure grid group -->
+             
+
+            <!-- pure grid group -->
+            <div class="pure-g">
+                <div class = "pure-u-1-1 candlestick_chart row_box">
+                    <div id = "nvidia_stock_data" class = "vis-container"></div>
+                </div>
+            </div>
+            <!-- end pure grid group -->
+
+            <!-- pure grid group -->
+            <div class="pure-g para1 row_box">
+                <div class="pure-u-1-1">
+                  <p style = "font-family: 'Roboto', sans-serif">
+                    All in all, NVIDIA's unparalleled performance against their rivals in the GPU market space has contributed significantly
+                    to why Steam users overwhelmingly prefer NVIDIA's GPUs over that of its competitors. Knowing this, there should be no surprise
+                    that <b>NVIDIA is faring quite well financially</b>. Its stock price continues to soar by the day and this trend does not seem 
+                    to be showing any signs of stopping any time soon, especially with <b>rumours of an RTX 50 series announcement</b> just around 
+                    the corner which is sure to provide a significant boon to investor confidence. 
+                  </p>
+                </div>
+            </div>
+            <!-- end pure grid group -->
+             
+        </div>
+
+        
+
+        <script type="text/javascript">
+            var spec1 = "js/steam_users_by_country.vg.json";
+            var spec2 = "js/nvidia_stock_data.vg.json";
+            var spec3 = "js/steam-hardware-survey-gpu-company-share.vg.json"
+            var spec4 = "js/rtx4090-vs-rx-7900-xtx.vg.json"
+
+            vegaEmbed('#steam_users_by_country', spec1).then(function(result) {
+              // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+            }).catch(console.error);
+
+            vegaEmbed('#steam_hardware_survey_gpu_company_share', spec3).then(function(result) {
+              // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+            }).catch(console.error);
+
+            vegaEmbed('#rtx4090_vs_rtx_7900_xtx', spec4).then(function(result) {
+              // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+            }).catch(console.error);
+
+            vegaEmbed('#nvidia_stock_data', spec2).then(function(result) {
+              // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+            }).catch(console.error);
+        </script>
+
+    </body>
+</html>
